@@ -1,11 +1,24 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello from your first Codespaces Python app!"}
+# Serve the "static" folder
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get("/status")
-def status():
-    return {"status": "running", "environment": "codespaces"}
+@app.get("/")
+def root():
+    return FileResponse("static/index.html")
+
+@app.get("/api/hello")
+def hello():
+    return {"message": "Hello from FastAPI!"}
+
+@app.get("/form")
+def form_page():
+    return FileResponse("static/form.html")
+
+@app.post("/api/submit")
+def submit(name: str = Form(...)):
+    return {"message": f"Hello, {name}!"}
