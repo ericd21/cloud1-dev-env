@@ -18,7 +18,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app ./app
 
 # Expose port for Fly.io
-EXPOSE 8000
+ENV PORT=8000
 
-# Run the FastAPI app with Uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run the FastAPI app with Uvicorn -- Copilot's version
+# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# Using "sh -c" allows the shell to expand the $PORT variable (Google's Version)
+CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"
