@@ -1,10 +1,14 @@
 # See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
+# CI/CD workflow kept for demonstration purposes.
+# Automatic deployment disabled because the app is not currently hosted.
 
 name: Fly Deploy
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch: 
+  # push update automatically on each commit when deployed 
+  # push:
+  # branches:
+  #   - main
 jobs:
   deploy:
     name: Deploy app
